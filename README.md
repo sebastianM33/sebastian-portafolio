@@ -57,11 +57,14 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 
 ## ✨ ¿De qué trata este proyecto?
 
-Básicamente, agarré mi antiguo portafolio que estaba hecho con puro HTML, CSS y JS, y lo pasé a Astro. Quería que se viera mucho más moderno y que cargara rapidísimo. 
+Básicamente, agarré mi antiguo portafolio que estaba hecho con puro HTML, CSS y JS, y lo pasé a Astro. Quería que se viera mucho más moderno y que cargara rapidísimo.
 
-### 🛠️ Lo que le mejoré al portafolio:
+### 🛠️ Lo que le mejoré y agregué respecto al portafolio anterior:
 - **Se mueve más rápido:** Al pasarlo a Astro y separarlo en componentes, la página vuela al cargar.
 - **Toques interactivos en React:** Le metí React para agregarle detalles melos. Por ejemplo, el fondo de partículas que reacciona cuando mueves el ratón.
-- **Nuevos íconos:** Cambié la forma de mostrar los logos usando librerías como `lucide-react`, para que las skillsy mis redes sociales se vean súper bien.
+- **Íconos de tecnologías en color real:** Usé [Devicon](https://devicon.dev/) para mostrar los logos de cada tecnología con sus colores originales, en lugar de íconos genéricos o monocromáticos.
+- **Sección de habilidades actualizada:** Agregué nuevas tecnologías al stack (Postman, DBeaver, Docker, entre otras) que no aparecían en el portafolio anterior.
 - **100% Responsive:** Mejoré todo el diseño para que la página se acomode perfecto y se vea bien tanto en la compu como desde el celular.
 - **Menos errores:** Empecé a usar TypeScript para asegurarme de que los datos de mis proyectos y habilidades estén bien estructurados y no se rompan fácil.
+- **Datos centralizados:** Toda la info de proyectos, habilidades y redes sociales vive en archivos de datos separados, así es mucho más fácil actualizarlo.
+- **Componentes reutilizables:** La arquitectura en componentes (Astro + React) hace que agregar nuevas secciones o cambiar el diseño sea pan comido comparado con el HTML plano de antes.

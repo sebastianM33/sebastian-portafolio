@@ -92,4 +92,16 @@ export const tecnologias: Tecnologia[] = [
     imagenSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
     claseImagen: "icono-blanco",
   },
+  {
+    nombre: "Postman",
+    gradienteFondo: "gradient-red-orange",
+    claseIcono: "",
+    imagenSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
+  },
+  {
+    nombre: "DBeaver",
+    gradienteFondo: "gradient-blue-light",
+    claseIcono: "",
+    imagenSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dbeaver/dbeaver-original.svg",
+  },
 ];

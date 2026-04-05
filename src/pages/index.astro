@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FondoDeParticulas from '../components/react/particles';
+import Hero from '../components/Hero.astro';
+import TarjetaTecnologia from '../components/SkillCard.astro';
+import TarjetaProyecto from '../components/ProjectCard.astro';
+
+import { tecnologias } from '../data/skills';
+import { proyectos } from '../data/projects';
+import { Mail } from 'lucide-react';
+import { Image } from 'astro:assets';
+import Error404 from '../assets/imageError.png';
+---
+
+<Layout titulo="Sebastian Portafolio">
+  <FondoDeParticulas client:load />
+
+  <div class="contenido">
+    <nav>
+      <div class="contenedor-navegacion">
+        <div class="cabecera-navegacion">
+          <a href="#" class="logo-navegacion" aria-label="Inicio" id="iconoNavegacion">
+            <Image src={Error404} alt="Luffy Logo" class="imagen-logo-navegacion" />
+          </a>
+        </div>
+        <div class="enlaces-navegacion" id="enlacesNavegacion">
+          <a href="#about">Sobre mí</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Proyectos</a>
+          <a href="#contact">Contacto</a>
+        </div>
+      </div>
+    </nav>
+
+    <Hero />
+
+    <section id="about" class="seccion-sobre-mi">
+      <div class="contenedor-seccion">
+        <h2 class="titulo-seccion">Sobre mí</h2>
+        <div class="tarjeta-sobre-mi">
+          <p class="texto-sobre-mi">
+            ¡Hola! Soy Sebastián Muñoz, Tecnólogo en Análisis y Desarrollo de Software
+          </p>
+          <p class="texto-sobre-mi">
+            Soy un desarrollador apasionado por el desarrollo web, enfocado en
+            crear soluciones innovadoras y eficientes. Mi filosofía es el
+            aprendizaje constante; me encanta explorar nuevas tecnologías y
+            aplicarlas en proyectos prácticos para construir aplicaciones
+            modernas y escalables.
+          </p>
+          <p class="texto-sobre-mi">
+            Mi objetivo profesional es escribir código limpio, mantener las
+            mejores prácticas y crear experiencias de usuario excepcionales.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="seccion-tecnologias">
+      <div class="contenedor-tecnologias">
+        <h2 class="titulo-seccion-centrado">Tecnologías</h2>
+        <div class="cuadricula-tecnologias" id="skills-grid">
+          {tecnologias.map((tecnologia) => (
+            <TarjetaTecnologia tecnologia={tecnologia} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="seccion-proyectos">
+      <div class="contenedor-proyectos">
+        <h2 class="titulo-seccion-centrado">Proyectos</h2>
+        <div class="cuadricula-proyectos" id="projects-grid">
+          {proyectos.map((proyecto) => (
+            <TarjetaProyecto proyecto={proyecto} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="seccion-contacto">
+      <div class="contenedor-contacto">
+        <h2 class="titulo-seccion-centrado">Contacto</h2>
+        <p class="subtitulo-contacto">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+        <div class="botones-contacto">
+          <a href="mailto:sebasmunoz153@gmail.com" class="boton-contacto">
+            <Mail />
+            <span>Email</span>
+          </a>
+          <a href="https://github.com/sebastianM33" target="_blank" rel="noopener noreferrer" class="boton-contacto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.12-.34 6.4-1.5 6.4-6.92a5.44 5.44 0 0 0-1.5-3.8 5.07 5.07 0 0 0-.15-3.7s-1.15-.38-3.9 1.5a13.48 13.48 0 0 0-7 0c-2.75-1.88-3.9-1.5-3.9-1.5a5.08 5.08 0 0 0-.15 3.7 5.44 5.44 0 0 0-1.5 3.8c0 5.4 3.28 6.58 6.4 6.92a4.8 4.8 0 0 0-1 3.02v4"/><path d="M9 18c-3.14 1.5-4.64-.5-5-2"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/sebastian-muñoz-cuellar" target="_blank" rel="noopener noreferrer" class="boton-contacto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pie-de-pagina">
+      <p>&copy; 2025 Sebastián Muñoz. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+</Layout>
+
+<script>
+  const iconoNavegacion = document.getElementById('iconoNavegacion');
+  const enlacesNavegacion = document.getElementById('enlacesNavegacion');
+
+  if (iconoNavegacion && enlacesNavegacion) {
+    iconoNavegacion.addEventListener('click', (eventoClic) => {
+      // Solo cambiar estado si estamos en la vista móvil
+      if (window.innerWidth < 640) {
+        eventoClic.preventDefault(); 
+        enlacesNavegacion.classList.toggle('activo');
+      }
+    });
+
+    // Cerrar el menú automáticamente al hacer click en un enlace
+    enlacesNavegacion.querySelectorAll('a').forEach(enlace => {
+      enlace.addEventListener('click', () => {
+        if (window.innerWidth < 640) {
+          enlacesNavegacion.classList.remove('activo');
+        }
+      });
+    });
+  }
+</script>

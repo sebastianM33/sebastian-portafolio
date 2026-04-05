@@ -1,0 +1,24 @@
+---
+import type { Tecnologia } from '../data/skills';
+
+interface Props {
+  tecnologia: Tecnologia;
+}
+
+const { tecnologia } = Astro.props;
+---
+
+<div class={`tarjeta-tecnologia visible ${tecnologia.gradienteFondo}`}>
+  {tecnologia.imagenSrc ? (
+    <img
+      src={tecnologia.imagenSrc}
+      alt={tecnologia.nombre}
+      width="70"
+      height="70"
+      class={tecnologia.claseImagen ?? ""}
+    />
+  ) : (
+    <i class={`${tecnologia.claseIcono}`}></i>
+  )}
+  <span>{tecnologia.nombre}</span>
+</div>

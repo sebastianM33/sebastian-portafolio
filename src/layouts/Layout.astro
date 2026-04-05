@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import luffyLogo from '../assets/imageLuffy.png';
+
+interface Props {
+    titulo?: string;
+    claseCuerpo?: string;
+}
+
+const { 
+    titulo = "Sebastian Portafolio", 
+    claseCuerpo = "bg-gray-950 text-white overflow-x-hidden" 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href={luffyLogo.src} />
+        <meta name="generator" content={Astro.generator} />
+        <title>{titulo}</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+        
+        </head>
+    <body class={claseCuerpo}>
+        <slot />
+    </body>
+</html>

@@ -68,3 +68,4 @@ Básicamente, agarré mi antiguo portafolio que estaba hecho con puro HTML, CSS 
 - **Menos errores:** Empecé a usar TypeScript para asegurarme de que los datos de mis proyectos y habilidades estén bien estructurados y no se rompan fácil.
 - **Datos centralizados:** Toda la info de proyectos, habilidades y redes sociales vive en archivos de datos separados, así es mucho más fácil actualizarlo.
 - **Componentes reutilizables:** La arquitectura en componentes (Astro + React) hace que agregar nuevas secciones o cambiar el diseño sea pan comido comparado con el HTML plano de antes.
+- **Código refactorizado y limpio:** Se reorganizó el CSS con variables globales (`--color-*`, `--radius-*`, `--shadow-*`), se eliminaron dependencias que no se usaban, clases CSS muertas, campos de datos innecesarios y carpetas vacías.

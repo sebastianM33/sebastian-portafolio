@@ -11,7 +11,7 @@ const esImagenAstro = typeof proyecto.imagenIlustrativa === 'object';
 ---
 
 <div class="tarjeta-proyecto visible">
-    <div class={`contenedor-imagen-proyecto ${proyecto.gradienteFondo}`}>
+    <div class="contenedor-imagen-proyecto">
         {esImagenAstro ? (
             <Image src={proyecto.imagenIlustrativa as any} alt={proyecto.titulo} class="imagen-proyecto" />
         ) : (

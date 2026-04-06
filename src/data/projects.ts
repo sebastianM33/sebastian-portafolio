@@ -7,7 +7,6 @@ export interface Proyecto {
   tecnologiasUtilizadas: string[];
   enlaceGithub: string;
   enlaceDemo: string;
-  gradienteFondo: string;
   imagenIlustrativa: string | ImageMetadata;
 }
 
@@ -18,7 +17,6 @@ export const proyectos: Proyecto[] = [
     tecnologiasUtilizadas: ["JavaScript", "HTML", "Tailwind CSS"],
     enlaceGithub: "https://github.com/sebastianM33/Drag_and_Drop",
     enlaceDemo: "https://drag-and-drop-eosin-sigma.vercel.app/",
-    gradienteFondo: "gradient-purple-pink",
     imagenIlustrativa: dragImage
   },
   {
@@ -27,7 +25,6 @@ export const proyectos: Proyecto[] = [
     tecnologiasUtilizadas: ["JavaScript", "API REST", "CSS"],
     enlaceGithub: "https://github.com/tuusuario/task-manager",
     enlaceDemo: "https://task-manager.vercel.app",
-    gradienteFondo: "gradient-blue-cyan",
     imagenIlustrativa: "img/task-manager.jpg",
   },
   {
@@ -36,7 +33,6 @@ export const proyectos: Proyecto[] = [
     tecnologiasUtilizadas: ["JavaScript", "API REST", "CSS"],
     enlaceGithub: "https://github.com/tuusuario/weather-app",
     enlaceDemo: "https://weather-app.vercel.app",
-    gradienteFondo: "gradient-orange-red",
     imagenIlustrativa: "img/weather-dashboard.jpg",
   },
 ];

@@ -1,58 +1,105 @@
 @import "tailwindcss";
 
-@theme {
+/*DESIGN TOKENS — Variables globales del sistema de diseño*/
+:root {
+  /* Fuente */
   --font-sans: "Space Grotesk", sans-serif;
+
+  /* Colores base */
+  --color-bg:           #030712;
+  --color-surface:      rgba(17, 24, 39, 0.5);
+  --color-border:       #1f2937;
+  --color-border-hover: #4b5563;
+
+  /* Texto */
+  --color-text:         #ffffff;
+  --color-text-muted:   #9ca3af;
+  --color-text-soft:    #d1d5db;
+  --color-text-dimmed:  #6b7280;
+
+  /* Azul primario */
+  --color-primary:      #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-glow: rgba(59, 130, 246, 0.4);
+  --color-primary-subtle: rgba(59, 130, 246, 0.2);
+
+  /* Superficies de UI */
+  --color-surface-dark: #1f2937;
+  --color-surface-mid:  #374151;
+
+  /* Radios */
+  --radius-sm:  0.5rem;
+  --radius-md:  0.75rem;
+  --radius-lg:  1rem;
+  --radius-full: 999px;
+
+  /* Espaciados de sección */
+  --section-padding-y: 5rem;
+  --section-padding-x: 1.5rem;
+
+  /* Sombras */
+  --shadow-glow:        0 0 20px var(--color-primary-glow);
+  --shadow-glow-hover:  0 0 20px rgba(59, 130, 246, 0.7);
+  --shadow-card-hover:  0 20px 40px rgba(59, 130, 246, 0.3);
+
+  /* Transiciones */
+  --transition-base:  all 0.3s ease;
+  --transition-slow:  all 0.5s ease;
+
+  /* Blur */
+  --blur-md: blur(16px);
+
+  /* Z-index */
+  --z-particles: 0;
+  --z-content:   1;
+  --z-nav:       50;
 }
+
 
 body {
   font-family: var(--font-sans);
 }
 
+/* PARTÍCULAS Y LAYOUT PRINCIPAL*/
 #particles {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  inset: 0;
+  z-index: var(--z-particles);
   pointer-events: none;
 }
 
 .contenido {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
-/* Navigation */
+/* NAVEGACIÓN*/
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgba(3, 7, 18, 0.8);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid #1f2937;
-  z-index: 50;
+  background-color: rgba(3, 7, 18, 0.85);
+  backdrop-filter: var(--blur-md);
+  border-bottom: 1px solid var(--color-border);
+  z-index: var(--z-nav);
 }
 
 .contenedor-navegacion {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0.75rem 1rem;
-}
-
-.cabecera-navegacion {
+  padding: 0.75rem 1.25rem;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  position: relative;
 }
 
+/* Logo */
 .logo-navegacion {
   display: flex;
   align-items: center;
-  justify-content: center;
   text-decoration: none;
-  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .imagen-logo-navegacion {
@@ -60,81 +107,156 @@ nav {
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px var(--color-primary-glow);
+  transition: var(--transition-base);
 }
 
-.nav-logo:hover .imagen-logo-navegacion {
+.logo-navegacion:hover .imagen-logo-navegacion {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+  box-shadow: var(--shadow-glow-hover);
 }
 
-.enlaces-navegacion {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.enlaces-navegacion.activo {
+/* Hice el botón hamburguesa con solo CSS, sin imágenes.
+   Son 3 cajitas (span) puestas una sobre otra con espacio entre ellas.
+   El efecto de fondo al pasar el cursor es un blanco muy transparente para que no se vea brusco. */
+.boton-menu {
   display: flex;
-  animation: fadeIn 0.3s ease forwards;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;             /* espacio entre cada rayita */
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+.boton-menu:hover {
+  background-color: rgba(255, 255, 255, 0.07); /* toque sutil al pasar el cursor */
 }
 
-.enlaces-navegacion a {
-  color: #ffffff;
+/* Cada rayita del hamburguesa: no tiene contenido, solo le doy ancho y alto con CSS */
+.linea-hamburguesa {
+  display: block;
+  width: 22px;   /* largo de la raya */
+  height: 2px;   /* grosor de la raya */
+  background-color: var(--color-text);
+  border-radius: 2px;
+  /* Le digo que cuando cambie algo, lo haga suavemente en 0.3s */
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
+}
+
+/* Cuando el botón tiene la clase "activo", convierto las 3 rayas en una X:
+   - La raya de arriba la bajo y la roto 45°
+   - La raya del medio la hago invisible
+   - La raya de abajo la subo y la roto -45°
+   El 7px es exactamente lo que necesito moverlas para que se crucen en el centro. */
+.boton-menu.activo .linea-hamburguesa:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.boton-menu.activo .linea-hamburguesa:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.boton-menu.activo .linea-hamburguesa:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* El menú empieza cerrado (altura 0, nada se ve).
+   Uso max-height porque CSS no puede animar hacia "auto",
+   pero sí puede animar entre dos números. */
+.enlaces-navegacion {
+  max-height: 0;
+  overflow: hidden;               /* oculto lo que se salga */
+  transition: max-height 0.35s ease; /* apertura suave */
+
+  position: absolute; /* lo coloco justo debajo del nav */
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: rgba(3, 7, 18, 0.97); /* fondo casi opaco para que se lean bien los links */
+  backdrop-filter: var(--blur-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Cuando el menú tiene la clase "activo", le doy espacio suficiente para que aparezcan los 4 links */
+.enlaces-navegacion.activo {
+  max-height: 320px;
+}
+
+/* Cada link del menú móvil: le doy buen padding para que sea fácil de tocar con el dedo */
+.enlace-nav {
+  display: block;
+  color: var(--color-text);
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 1rem 1.5rem;             /* área grande para el dedo */
+  border-left: 3px solid transparent; /* reservo espacio para el borde azul del hover */
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
-.enlaces-navegacion a:hover {
+/* Al primer link le pongo una línea arriba para separarlo del nav */
+.enlace-nav:first-child { border-top: 1px solid var(--color-border); }
+
+/* Al pasar el cursor (o tocar en móvil), aparece el borde azul a la izquierda */
+.enlace-nav:hover {
   color: #60a5fa;
+  background-color: rgba(59, 130, 246, 0.07);
+  border-left-color: var(--color-primary);
 }
 
+/* En pantallas grandes (tablet / desktop): escondo el botón hamburguesa
+   y muestro los links en fila horizontal como un nav normal */
 @media (min-width: 640px) {
-  .contenedor-navegacion {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
-  }
-
-  .cabecera-navegacion {
-    width: auto;
+  .boton-menu {
+    display: none; /* en desktop no lo necesito */
   }
 
   .enlaces-navegacion {
+    /* Reseteo todo el estilo móvil y lo convierto en una fila horizontal */
     display: flex;
     flex-direction: row;
-    gap: 1.5rem;
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-    animation: none;
+    align-items: center;
+    gap: 0.25rem;
+    max-height: none;
+    overflow: visible;
+    position: static;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
   }
 
-  .enlaces-navegacion a {
-    font-size: 1rem;
+  .enlace-nav {
+    padding: 0.4rem 0.75rem; /* menos padding, no necesito tanto espacio en desktop */
+    border-left: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+  }
+
+  .enlace-nav:first-child { border-top: none; }
+
+  .enlace-nav:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-left-color: transparent;
   }
 }
 
+
+
+/* HERO*/
 .seccion-principal {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  padding-top: 5rem;
+  padding: 5rem var(--section-padding-x) var(--section-padding-x);
 }
 
 .contenido-principal {
@@ -146,28 +268,23 @@ nav {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  text-shadow: var(--shadow-glow);
   line-height: 1.2;
 }
 
 .subtitulo-principal {
   font-size: 1rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin-bottom: 2rem;
   padding: 0 1rem;
 }
 
 @media (min-width: 768px) {
-  .titulo-principal {
-    font-size: 4.5rem;
-  }
-  
-  .subtitulo-principal {
-    font-size: 1.25rem;
-    padding: 0;
-  }
+  .titulo-principal      { font-size: 4.5rem; }
+  .subtitulo-principal   { font-size: 1.25rem; padding: 0; }
 }
 
+/* Botones del hero */
 .botones-principal {
   display: flex;
   flex-direction: column;
@@ -177,32 +294,29 @@ nav {
 }
 
 @media (min-width: 640px) {
-  .botones-principal {
-    flex-direction: row;
-    padding: 0;
-  }
+  .botones-principal { flex-direction: row; padding: 0; }
 }
 
 .boton-primario {
   padding: 0.75rem 2rem;
-  background-color: #2563eb;
-  color: #ffffff;
+  background-color: var(--color-primary);
+  color: var(--color-text);
   text-decoration: none;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
 
 .boton-primario:hover {
-  background-color: #1d4ed8;
+  background-color: var(--color-primary-dark);
 }
 
 .boton-secundario {
   padding: 0.75rem 2rem;
-  border: 1px solid #2563eb;
-  color: #ffffff;
+  border: 1px solid var(--color-primary);
+  color: var(--color-text);
   text-decoration: none;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
@@ -211,9 +325,17 @@ nav {
   background-color: rgba(37, 99, 235, 0.1);
 }
 
-/* About Section */
+/* CARD BASE*/
+.tarjeta-base {
+  background-color: var(--color-surface);
+  backdrop-filter: var(--blur-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+/*SECCIÓN SOBRE MÍ*/
 .seccion-sobre-mi {
-  padding: 5rem 1.5rem;
+  padding: var(--section-padding-y) var(--section-padding-x);
 }
 
 .contenedor-seccion {
@@ -225,27 +347,27 @@ nav {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  text-shadow: var(--shadow-glow);
 }
 
 .tarjeta-sobre-mi {
-  background-color: rgba(17, 24, 39, 0.5);
-  backdrop-filter: blur(16px);
-  border: 1px solid #1f2937;
-  border-radius: 1rem;
+  background-color: var(--color-surface);
+  backdrop-filter: var(--blur-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: 2rem;
 }
 
 .texto-sobre-mi {
   font-size: 1.125rem;
-  color: #d1d5db;
+  color: var(--color-text-soft);
   line-height: 1.75;
   margin-bottom: 1rem;
 }
 
-/* Skills Section */
+/*SKILLS*/
 .seccion-tecnologias {
-  padding: 5rem 1.5rem;
+  padding: var(--section-padding-y) var(--section-padding-x);
 }
 
 .contenedor-tecnologias {
@@ -258,8 +380,8 @@ nav {
   font-weight: 700;
   margin-bottom: 3rem;
   text-align: center;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  color: #fff; /* Añadido para que se vea en el fondo oscuro */
+  text-shadow: var(--shadow-glow);
+  color: var(--color-text);
 }
 
 .cuadricula-tecnologias {
@@ -268,81 +390,63 @@ nav {
   gap: 1.5rem;
 }
 
-/* Tus Media Queries (Perfectas) */
 @media (min-width: 768px) {
-  .cuadricula-tecnologias {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  .cuadricula-tecnologias { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (min-width: 1024px) {
-  .cuadricula-tecnologias {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  .cuadricula-tecnologias { grid-template-columns: repeat(6, 1fr); }
 }
 
-/* --- MODIFICADO --- */
+/* Tarjeta de tecnología */
 .tarjeta-tecnologia {
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  text-align: center;
-  font-weight: 700;
-  font-size: 1.125rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: scale(0.9);
-  color: #fff; /* Texto blanco */
-
-  /* Añadido para centrar icono y texto */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem; /* Espacio entre icono y texto */
-  min-height: 150px; /* Alto uniforme */
+  gap: 0.75rem;
+  min-height: 150px;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-text);
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: var(--transition-base);
 }
 
-/* --- AÑADIDO --- */
-/* Estilo para el icono de Devicon */
-.tarjeta-tecnologia i {
-  font-size: 3rem; /* 48px */
-}
-
-/* Imágenes SVG del CDN (Astro, GitHub) */
-.tarjeta-tecnologia img {
-  width: 3rem;
-  height: 3rem;
-  object-fit: contain;
-}
-
-/* GitHub: icono negro → blanco */
-.icono-blanco {
-  filter: invert(1) brightness(2);
-}
-
-/* Astro: icono negro → naranja oficial #ff5d01 */
-.icono-naranja {
-  filter: invert(46%) sepia(97%) saturate(1700%) hue-rotate(359deg) brightness(103%) contrast(107%);
-}
-
-/* Tu animación (Perfecta) */
 .tarjeta-tecnologia.visible {
   opacity: 1;
   transform: scale(1);
-  background-color: rgba(17, 24, 39, 0.5);
-  backdrop-filter: blur(16px);
-  border: 1px solid #1f2937;
-  border-radius: 1rem;
+  background-color: var(--color-surface);
+  backdrop-filter: var(--blur-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
 }
 
 .tarjeta-tecnologia:hover {
   transform: scale(1.1) rotate(5deg);
 }
 
-/* Projects Section */
+/* Íconos dentro de la tarjeta */
+.tarjeta-tecnologia i   { font-size: 3rem; }
+
+.tarjeta-tecnologia img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
+
+/* Filtros de color para SVGs externos */
+.icono-blanco  { filter: invert(1) brightness(2); }
+.icono-naranja { filter: invert(46%) sepia(97%) saturate(1700%) hue-rotate(359deg) brightness(103%) contrast(107%); }
+
+/* SECCIÓN PROYECTOS*/
 .seccion-proyectos {
-  padding: 5rem 1.5rem;
+  padding: var(--section-padding-y) var(--section-padding-x);
 }
 
 .contenedor-proyectos {
@@ -356,26 +460,22 @@ nav {
 }
 
 @media (min-width: 768px) {
-  .cuadricula-proyectos {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .cuadricula-proyectos { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (min-width: 1024px) {
-  .cuadricula-proyectos {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .cuadricula-proyectos { grid-template-columns: repeat(3, 1fr); }
 }
 
 .tarjeta-proyecto {
-  background-color: rgba(17, 24, 39, 0.5);
-  backdrop-filter: blur(16px);
-  border: 1px solid #1f2937;
-  border-radius: 1rem;
+  background-color: var(--color-surface);
+  backdrop-filter: var(--blur-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   opacity: 0;
   transform: translateY(2.5rem);
-  transition: all 0.5s ease;
+  transition: var(--transition-slow);
 }
 
 .tarjeta-proyecto.visible {
@@ -385,22 +485,23 @@ nav {
 
 .tarjeta-proyecto:hover {
   transform: translateY(-0.625rem);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .contenedor-imagen-proyecto {
   height: 10rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .letra-proyecto {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text);
   opacity: 0.5;
 }
 
@@ -408,7 +509,7 @@ nav {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
 }
 
 .titulo-proyecto {
@@ -418,7 +519,7 @@ nav {
 }
 
 .descripcion-proyecto {
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin-bottom: 1rem;
 }
 
@@ -427,17 +528,16 @@ nav {
   flex-wrap: wrap;
   gap: 0.4rem;
   margin-bottom: 1rem;
-  font-size: 0.85rem;
 }
 
 .etiqueta-tecnologia {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(59, 130, 246, 0.2);
+  background: var(--color-primary-subtle);
   color: #f8fafc;
   border: 1px solid rgba(59, 130, 246, 0.35);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.25rem 0.65rem;
   font-size: 0.7rem;
   font-weight: 600;
@@ -457,27 +557,10 @@ nav {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   text-decoration: none;
+  font-weight: 600;
   transition: background-color 0.3s ease;
-}
-
-.boton-proyecto-github {
-  background-color: #1f2937;
-  color: #ffffff;
-}
-
-.boton-proyecto-github:hover {
-  background-color: #374151;
-}
-
-.boton-proyecto-despliegue {
-  background-color: #2563eb;
-  color: #ffffff;
-}
-
-.boton-proyecto-despliegue:hover {
-  background-color: #1d4ed8;
 }
 
 .boton-proyecto svg {
@@ -485,9 +568,27 @@ nav {
   height: 1.25rem;
 }
 
-/* Contact Section */
+.boton-proyecto-github {
+  background-color: var(--color-surface-dark);
+  color: var(--color-text);
+}
+
+.boton-proyecto-github:hover {
+  background-color: var(--color-surface-mid);
+}
+
+.boton-proyecto-despliegue {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.boton-proyecto-despliegue:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* SECCIÓN CONTACTO*/
 .seccion-contacto {
-  padding: 5rem 1.5rem;
+  padding: var(--section-padding-y) var(--section-padding-x);
 }
 
 .contenedor-contacto {
@@ -498,7 +599,7 @@ nav {
 
 .subtitulo-contacto {
   font-size: 1.25rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin-bottom: 3rem;
   margin-top: -1.5rem;
 }
@@ -511,10 +612,7 @@ nav {
 }
 
 @media (min-width: 640px) {
-  .botones-contacto {
-    flex-direction: row;
-    gap: 1.5rem;
-  }
+  .botones-contacto { flex-direction: row; gap: 1.5rem; }
 }
 
 .boton-contacto {
@@ -523,19 +621,19 @@ nav {
   justify-content: center;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  background-color: #1f2937;
-  color: #ffffff;
-  border-radius: 0.5rem;
+  background-color: var(--color-surface-dark);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s ease;
   border: 1px solid transparent;
+  transition: var(--transition-base);
 }
 
 .boton-contacto:hover {
-  background-color: #374151;
+  background-color: var(--color-surface-mid);
   transform: translateY(-3px);
-  border-color: #4b5563;
+  border-color: var(--color-border-hover);
 }
 
 .boton-contacto svg {
@@ -543,15 +641,15 @@ nav {
   height: 1.25rem;
 }
 
-/* Footer */
+/* FOOTER*/
 .pie-de-pagina {
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 2rem var(--section-padding-x);
   border-top: 1px solid rgba(31, 41, 55, 0.5);
   margin-top: 2rem;
 }
 
 .pie-de-pagina p {
-  color: #6b7280;
+  color: var(--color-text-dimmed);
   font-size: 0.875rem;
 }

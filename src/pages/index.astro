@@ -7,7 +7,6 @@ import TarjetaProyecto from '../components/ProjectCard.astro';
 
 import { tecnologias } from '../data/skills';
 import { proyectos } from '../data/projects';
-import { Mail } from 'lucide-react';
 import { Image } from 'astro:assets';
 import Error404 from '../assets/imageError.png';
 ---
@@ -18,16 +17,19 @@ import Error404 from '../assets/imageError.png';
   <div class="contenido">
     <nav>
       <div class="contenedor-navegacion">
-        <div class="cabecera-navegacion">
-          <a href="#" class="logo-navegacion" aria-label="Inicio" id="iconoNavegacion">
-            <Image src={Error404} alt="Luffy Logo" class="imagen-logo-navegacion" />
-          </a>
-        </div>
+        <a href="#" class="logo-navegacion" aria-label="Inicio">
+          <Image src={Error404} alt="Luffy Logo" class="imagen-logo-navegacion" />
+        </a>
+        <button class="boton-menu" id="botonMenu" aria-label="Abrir menú" aria-expanded="false">
+          <span class="linea-hamburguesa"></span>
+          <span class="linea-hamburguesa"></span>
+          <span class="linea-hamburguesa"></span>
+        </button>
         <div class="enlaces-navegacion" id="enlacesNavegacion">
-          <a href="#about">Sobre mí</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Proyectos</a>
-          <a href="#contact">Contacto</a>
+          <a href="#about" class="enlace-nav">Sobre mí</a>
+          <a href="#skills" class="enlace-nav">Skills</a>
+          <a href="#projects" class="enlace-nav">Proyectos</a>
+          <a href="#contact" class="enlace-nav">Contacto</a>
         </div>
       </div>
     </nav>
@@ -84,7 +86,10 @@ import Error404 from '../assets/imageError.png';
         <p class="subtitulo-contacto">¿Tienes un proyecto en mente? ¡Hablemos!</p>
         <div class="botones-contacto">
           <a href="mailto:sebasmunoz153@gmail.com" class="boton-contacto">
-            <Mail />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
             <span>Email</span>
           </a>
           <a href="https://github.com/sebastianM33" target="_blank" rel="noopener noreferrer" class="boton-contacto">
@@ -106,24 +111,27 @@ import Error404 from '../assets/imageError.png';
 </Layout>
 
 <script>
-  const iconoNavegacion = document.getElementById('iconoNavegacion');
+  // Agarro los dos elementos que voy a necesitar controlar
+  const botonMenu = document.getElementById('botonMenu');
   const enlacesNavegacion = document.getElementById('enlacesNavegacion');
 
-  if (iconoNavegacion && enlacesNavegacion) {
-    iconoNavegacion.addEventListener('click', (eventoClic) => {
-      // Solo cambiar estado si estamos en la vista móvil
-      if (window.innerWidth < 640) {
-        eventoClic.preventDefault(); 
-        enlacesNavegacion.classList.toggle('activo');
-      }
+  if (botonMenu && enlacesNavegacion) {
+
+    // Cuando toco el botón, agrego o quito la clase "activo" en el menú y en el botón.
+    // Con esa clase el CSS hace el resto: abre el menú y convierte las rayas en X.
+    botonMenu.addEventListener('click', () => {
+      const abierto = enlacesNavegacion.classList.toggle('activo');
+      botonMenu.classList.toggle('activo', abierto);
+      botonMenu.setAttribute('aria-expanded', String(abierto)); // para accesibilidad
     });
 
-    // Cerrar el menú automáticamente al hacer click en un enlace
+    // Cuando toco cualquier enlace del menú, lo cierro automáticamente
+    // para que no quede abierto mientras el usuario navega
     enlacesNavegacion.querySelectorAll('a').forEach(enlace => {
       enlace.addEventListener('click', () => {
-        if (window.innerWidth < 640) {
-          enlacesNavegacion.classList.remove('activo');
-        }
+        enlacesNavegacion.classList.remove('activo');
+        botonMenu.classList.remove('activo');
+        botonMenu.setAttribute('aria-expanded', 'false');
       });
     });
   }

@@ -8,7 +8,7 @@ interface Props {
 const { tecnologia } = Astro.props;
 ---
 
-<div class={`tarjeta-tecnologia visible ${tecnologia.gradienteFondo}`}>
+<div class="tarjeta-tecnologia visible">
   {tecnologia.imagenSrc ? (
     <img
       src={tecnologia.imagenSrc}

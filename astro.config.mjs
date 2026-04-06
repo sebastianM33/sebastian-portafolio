@@ -21,3 +21,4 @@ export default defineConfig({
     }
   }
 });
+// Fuerza de despliegue final - Abril 2026
